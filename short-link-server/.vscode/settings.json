@@ -1,0 +1,31 @@
+{
+	// multiple page exclude setting
+
+  // vscode + prettier + typescript setting
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false
+  },
+  // end vscode + prettier + typescript setting
+  // filehead setting
+  "psi-header.templates": [
+    {
+      "language": "*",
+      "template": [
+				"@Title: <<filename>>",
+				"@Package: <<projectname>>",
+				"@Description: ",
+				"@Author: <<author>>",
+				"@Date: <<filecreated('YYYY-MM-DD HH:mm:ss')>>",
+				"@Version: <<projectversion>>", 
+				"@Note: "
+			]
+    }
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+	"editor.insertSpaces": false
+}

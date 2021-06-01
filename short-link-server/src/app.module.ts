@@ -1,21 +1,22 @@
 import { UrlMapModule } from './modules/url-map/url-map.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import configuration from './config/configuration'
-import * as path from 'path'
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { getConnectionOptions } from 'typeorm';
+import configuration from './config/configuration';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configuration]
+      load: [configuration],
     }),
     TypeOrmModule.forRootAsync({
-        useFactory: (config: ConfigService): TypeOrmModuleOptions => config.get('ormconfig'),
-        inject: [ConfigService],
+      useFactory: (configService: ConfigService<any>) => {
+        return configService.get('database');
+      },
+      inject: [ConfigService],
     }),
-    UrlMapModule
+    UrlMapModule,
   ],
   controllers: [],
   providers: [],
