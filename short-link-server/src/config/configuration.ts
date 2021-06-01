@@ -1,3 +1,5 @@
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+
 export interface GlobalConfig {
   port: number;
   timeout: number;
@@ -18,7 +20,7 @@ export interface GlobalConfig {
       migrationsDir: string;
       subscribersDir: string;
     };
-
+    namingStrategy: SnakeNamingStrategy;
     synchronize?: boolean;
   };
 }
@@ -44,6 +46,7 @@ export default (): GlobalConfig => ({
       subscribersDir: 'src/subscriber',
     },
 
+    namingStrategy: new SnakeNamingStrategy(),
     synchronize: true, // dev only
   },
 });
