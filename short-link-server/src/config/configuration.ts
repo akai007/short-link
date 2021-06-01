@@ -1,26 +1,26 @@
 export interface GlobalConfig {
-  port: number,
-  timeout: number,
+  port: number;
+  timeout: number;
 
   database: {
-    type: string,
-    host: string,
-    port: number,
-    username: string,
-    password: string,
-    database: string,
+    type: string;
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+    database: string;
 
-    entities: string[],
-    subscribers: string[],
-    migrations: string[],
+    entities: string[];
+    subscribers: string[];
+    migrations: string[];
     cli: {
-      entitiesDir: string,
-      migrationsDir: string,
-      subscribersDir: string,
-    },
+      entitiesDir: string;
+      migrationsDir: string;
+      subscribersDir: string;
+    };
 
-    synchronize?: boolean,
-  },
+    synchronize?: boolean;
+  };
 }
 
 export default (): GlobalConfig => ({
