@@ -5,13 +5,6 @@ import { ResponseResult } from '../dto/response-result.dto';
 
 export class ForbiddenException extends BaseException {
   constructor() {
-    super(
-      new ResponseResult(
-        CodeEnum.FORBIDDEN,
-        CodeEnumMap.get(CodeEnum.FORBIDDEN),
-        {},
-      ),
-      HttpStatus.FORBIDDEN,
-    );
+    super(new ResponseResult(CodeEnum.FORBIDDEN, CodeEnumMap.get(CodeEnum.FORBIDDEN), {}), HttpStatus.FORBIDDEN);
   }
 }

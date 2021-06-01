@@ -1,9 +1,4 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpStatus,
-} from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpStatus } from '@nestjs/common';
 import { ResponseResult } from '../dto/response-result.dto';
 import { ValidationException } from '../exception/validation.exception';
 
@@ -14,9 +9,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     // const request = ctx.getRequest();
 
-    const status = exception.getStatus
-      ? exception.getStatus()
-      : HttpStatus.INTERNAL_SERVER_ERROR;
+    const status = exception.getStatus ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
     const msg = exception.message;
     const code = exception.getCode ? exception.getCode() : '';
 
@@ -26,9 +19,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       const validationException: ValidationException = exception;
       response.status(status).json(validationException.getResponseResult());
     } else {
-      response
-        .status(status)
-        .json(new ResponseResult(code.toString(), msg, {}));
+      response.status(status).json(new ResponseResult(code.toString(), msg, {}));
     }
   }
 }
