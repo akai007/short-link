@@ -20,6 +20,6 @@ async function bootstrap() {
   app.useGlobalFilters(new TypeormExceptionFilter());
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  await app.listen(require('./config/base').default.port);
+  await app.listen(require('./config/configuration').default().port);
 }
 bootstrap();

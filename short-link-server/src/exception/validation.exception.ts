@@ -6,13 +6,6 @@ import { ResponseResult } from '../dto/response-result.dto';
 
 export class ValidationException extends BaseException {
   constructor(validationErrors: ValidationError[]) {
-    super(
-      new ResponseResult(
-        CodeEnum.INVALID_PARAMS,
-        validationErrors.toString(),
-        validationErrors,
-      ),
-      HttpStatus.FORBIDDEN,
-    );
+    super(new ResponseResult(CodeEnum.INVALID_PARAMS, validationErrors.toString(), validationErrors), HttpStatus.FORBIDDEN);
   }
 }

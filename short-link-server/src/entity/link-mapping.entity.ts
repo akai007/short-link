@@ -3,7 +3,7 @@ import { Length } from 'class-validator';
 import { BaseEntity } from './base.entity';
 
 @Entity()
-export class LinkMap extends BaseEntity {
+export class LinkMapping extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
