@@ -1,3 +1,4 @@
+// TODO remove
 export default {
   type: 'mysql',
   host: process.env.DB_HOST,
