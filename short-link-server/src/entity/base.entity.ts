@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-export class BaseEntity {
+export abstract class BaseEntity {
   @CreateDateColumn({ name: 'create_time', comment: '创建时间' })
   createTime: Date;
 
@@ -13,6 +13,6 @@ export class BaseEntity {
   @Column({ length: 32, default: 'admin', comment: '修改人' })
   editor: string;
 
-  @Column({ default: false, comment: '是否禁用' })
+  @Column({ type: 'bool', width: 1, default: false, comment: '是否禁用' })
   ban: boolean;
 }
