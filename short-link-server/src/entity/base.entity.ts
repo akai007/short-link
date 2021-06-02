@@ -1,6 +1,9 @@
-import { Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export abstract class BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
   @CreateDateColumn({ comment: '创建时间' })
   createTime: Date;
 

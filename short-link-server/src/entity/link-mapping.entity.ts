@@ -1,12 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, Index } from 'typeorm';
 import { Length } from 'class-validator';
 import { BaseEntity } from './base.entity';
 
 @Entity()
+@Index(['shortUrl'], { unique: true })
+@Index(['desc'])
 export class LinkMapping extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
   @Column({ length: 64, default: '', comment: '短链url' })
   @Length(4, 64)
   shortUrl: string;

@@ -1,8 +1,8 @@
-import { UrlMapModule } from './modules/url-map/url-map.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LinkMappingModule } from './modules/link-mapping/link-mapping.module';
 
 @Module({
   imports: [
@@ -16,7 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       },
       inject: [ConfigService],
     }),
-    UrlMapModule,
+    LinkMappingModule,
   ],
   controllers: [],
   providers: [],
