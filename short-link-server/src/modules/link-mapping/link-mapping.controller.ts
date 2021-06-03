@@ -12,8 +12,6 @@ export class LinkMappingController {
 
   @Post('add')
   async add(@Body() linkMapping) {
-    console.log(linkMapping, 'linkMapping');
-
     return await this.urlMapService.insert(linkMapping);
   }
 }
