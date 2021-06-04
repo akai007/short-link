@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LinkMapping } from 'src/entity/link-mapping.entity';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { v5 as uuidv5 } from 'uuid';
 function getShortUUID(domain: string) {
   const SHORT_ARRAY = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
@@ -19,25 +19,34 @@ function getShortUUID(domain: string) {
 
 @Injectable()
 export class LinkMappingService {
-  constructor(@InjectRepository(LinkMapping) private readonly linkMappingRepository: Repository<LinkMapping>) {}
+  constructor(private connection: Connection, @InjectRepository(LinkMapping) private readonly linkMappingRepository: Repository<LinkMapping>) {}
 
   async findAll(): Promise<LinkMapping[]> {
     return await this.linkMappingRepository.find();
   }
 
   async insert(linkMapping: LinkMapping): Promise<LinkMapping> {
-    const insertObj = new LinkMapping();
+    const runner = this.connection.createQueryRunner();
+    await runner.connect();
+    await runner.startTransaction();
+    try {
+      let insertObj = new LinkMapping();
+      const compressCode = getShortUUID(linkMapping.rawUrl);
+      const DOMAIN = 'http://localhost';
+      const shortUrl = `${DOMAIN}/${compressCode}`;
 
-    // const rawUrlObj = new URL(linkMapping.rawUrl);
-    // const urlDomain = `${rawUrlObj.protocol}//:${rawUrlObj.host}`;
-    const compressCode = getShortUUID(linkMapping.rawUrl);
-    const DOMAIN = 'http://localhost';
-    const shortUrl = `${DOMAIN}/${compressCode}`;
+      insertObj.rawUrl = linkMapping.rawUrl;
+      insertObj.shortUrl = shortUrl;
 
-    insertObj.rawUrl = linkMapping.rawUrl;
-    insertObj.shortUrl = shortUrl;
+      insertObj = await runner.manager.save(insertObj);
 
-    // return insertObj;
-    return await this.linkMappingRepository.save(linkMapping);
+      await runner.commitTransaction();
+      return insertObj;
+    } catch (err) {
+      await runner.rollbackTransaction();
+      throw err;
+    } finally {
+      await runner.release();
+    }
   }
 }

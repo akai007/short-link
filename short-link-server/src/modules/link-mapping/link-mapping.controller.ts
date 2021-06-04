@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Redirect } from '@nestjs/common';
 import { LinkMappingService } from './link-mapping.service';
 
 @Controller('link-mapping')

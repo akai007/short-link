@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LinkMappingModule } from './modules/link-mapping/link-mapping.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { LinkMappingModule } from './modules/link-mapping/link-mapping.module';
     }),
     LinkMappingModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
