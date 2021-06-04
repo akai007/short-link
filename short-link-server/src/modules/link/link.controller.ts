@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Redirect } from '@nestjs/common';
 import { LinkService } from './link.service';
 
-@Controller('link-mapping')
+@Controller('link')
 export class LinkController {
   constructor(private readonly urlMapService: LinkService) {}
 
