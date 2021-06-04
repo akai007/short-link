@@ -5,7 +5,7 @@ import { BaseEntity } from './base.entity';
 @Entity()
 @Index(['shortUrl'], { unique: true })
 @Index(['desc'])
-export class LinkMapping extends BaseEntity {
+export class Link extends BaseEntity {
   @Column({ length: 64, default: '', comment: '短链url' })
   @Length(4, 64)
   shortUrl: string;

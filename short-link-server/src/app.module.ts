@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LinkMappingModule } from './modules/link-mapping/link-mapping.module';
+import { LinkModule } from './modules/link/link.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -17,7 +17,7 @@ import { AppController } from './app.controller';
       },
       inject: [ConfigService],
     }),
-    LinkMappingModule,
+    LinkModule,
   ],
   controllers: [AppController],
   providers: [],

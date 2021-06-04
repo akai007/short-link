@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LinkMapping } from 'src/entity/link-mapping.entity';
+import { Link } from 'src/entity/link.entity';
 import { Connection, Repository } from 'typeorm';
 import { v5 as uuidv5 } from 'uuid';
 function getShortUUID(domain: string) {
@@ -18,24 +18,24 @@ function getShortUUID(domain: string) {
 }
 
 @Injectable()
-export class LinkMappingService {
-  constructor(private connection: Connection, @InjectRepository(LinkMapping) private readonly linkMappingRepository: Repository<LinkMapping>) {}
+export class LinkService {
+  constructor(private connection: Connection, @InjectRepository(Link) private readonly LinkRepository: Repository<Link>) {}
 
-  async findAll(): Promise<LinkMapping[]> {
-    return await this.linkMappingRepository.find();
+  async findAll(): Promise<Link[]> {
+    return await this.LinkRepository.find();
   }
 
-  async insert(linkMapping: LinkMapping): Promise<LinkMapping> {
+  async insert(link: Link): Promise<Link> {
     const runner = this.connection.createQueryRunner();
     await runner.connect();
     await runner.startTransaction();
     try {
-      let insertObj = new LinkMapping();
-      const compressCode = getShortUUID(linkMapping.rawUrl);
+      let insertObj = new Link();
+      const compressCode = getShortUUID(link.rawUrl);
       const DOMAIN = 'http://localhost';
       const shortUrl = `${DOMAIN}/${compressCode}`;
 
-      insertObj.rawUrl = linkMapping.rawUrl;
+      insertObj.rawUrl = link.rawUrl;
       insertObj.shortUrl = shortUrl;
 
       insertObj = await runner.manager.save(insertObj);
