@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Link } from 'src/entity/link.entity';
 import { Connection, Repository } from 'typeorm';
 import { v5 as uuidv5 } from 'uuid';
+
 function getShortUUID(domain: string) {
   const SHORT_ARRAY = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
   let uid = uuidv5(domain, uuidv5.URL);
@@ -19,7 +21,7 @@ function getShortUUID(domain: string) {
 
 @Injectable()
 export class LinkService {
-  constructor(private connection: Connection, @InjectRepository(Link) private readonly LinkRepository: Repository<Link>) {}
+  constructor(private connection: Connection, @InjectRepository(Link) private readonly LinkRepository: Repository<Link>, private readonly configService: ConfigService) {}
 
   async findAll(): Promise<Link[]> {
     return await this.LinkRepository.find();
@@ -32,7 +34,8 @@ export class LinkService {
     try {
       let insertObj = new Link();
       const compressCode = getShortUUID(link.rawUrl);
-      const DOMAIN = 'http://localhost';
+      const DOMAIN = this.configService.get('shortLink').host;
+
       const shortUrl = `${DOMAIN}/${compressCode}`;
 
       insertObj.rawUrl = link.rawUrl;

@@ -1,12 +1,12 @@
-import { Body, Controller, Get, Param, Redirect } from '@nestjs/common';
+import { Controller, Get, Param, Redirect } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  @Get(':code')
+  @Get('d/:code')
   @Redirect('', 302)
-  async shortLink(@Param() params, @Body() body) {
-    console.log(params, 'params', body);
+  async shortLink(@Param() params) {
+    console.log(params, 'params');
 
-    return { url: 'http://localhost:3001/link-mapping' };
+    return { url: 'http://localhost:3001/link' };
   }
 }

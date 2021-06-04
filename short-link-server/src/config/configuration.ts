@@ -23,6 +23,10 @@ export interface GlobalConfig {
     namingStrategy: SnakeNamingStrategy;
     synchronize?: boolean;
   };
+
+  shortLink: {
+    host: string;
+  };
 }
 
 export default (): GlobalConfig => ({
@@ -48,5 +52,9 @@ export default (): GlobalConfig => ({
 
     namingStrategy: new SnakeNamingStrategy(),
     synchronize: true, // dev only
+  },
+
+  shortLink: {
+    host: process.env.SL_HOST,
   },
 });

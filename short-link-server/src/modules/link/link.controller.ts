@@ -1,17 +1,18 @@
-import { Body, Controller, Get, Post, Redirect } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Link } from 'src/entity/link.entity';
 import { LinkService } from './link.service';
 
 @Controller('link')
 export class LinkController {
-  constructor(private readonly urlMapService: LinkService) {}
+  constructor(private readonly linkService: LinkService) {}
 
   @Get()
   async findAll() {
-    return await this.urlMapService.findAll();
+    return await this.linkService.findAll();
   }
 
   @Post('add')
-  async add(@Body() Link) {
-    return await this.urlMapService.insert(Link);
+  async add(@Body() link: Link) {
+    return await this.linkService.insert(link);
   }
 }
